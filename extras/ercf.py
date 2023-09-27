@@ -2241,10 +2241,10 @@ class Ercf:
             self.encoder_sensor.reset_counts()    # Encoder 0000
             self._track_unload_start()
 
-            if check_state or self.loaded_status == self.LOADED_STATUS_UNKNOWN:
-                # Let's determine where filament is and reset state before continuing
-                self._log_error("Unsure of filament position, recovering state...")
-                self._recover_loaded_state()
+            #if check_state or self.loaded_status == self.LOADED_STATUS_UNKNOWN:
+            #    # Let's determine where filament is and reset state before continuing
+            #    self._log_error("Unsure of filament position, recovering state...")
+            self._recover_loaded_state()
 
             if self.loaded_status == self.LOADED_STATUS_UNLOADED:
                 self._log_debug("Filament already ejected")
@@ -2261,7 +2261,8 @@ class Ercf:
                     self._set_loaded_status(self.LOADED_STATUS_PARTIAL_IN_EXTRUDER)
                 else:
                     # No movement means we can safely assume we are somewhere in the bowden
-                    self._set_loaded_status(self.LOADED_STATUS_PARTIAL_IN_BOWDEN)
+                    # self._set_loaded_status(self.LOADED_STATUS_PARTIAL_IN_BOWDEN)
+                    self._set_loaded_status(self.LOADED_STATUS_PARTIAL_HOMED_SENSOR)
 
             if self.loaded_status == self.LOADED_STATUS_PARTIAL_END_OF_BOWDEN and self._has_toolhead_sensor():
                 # This error case can occur when home to sensor failed and we may be stuck in extruder
